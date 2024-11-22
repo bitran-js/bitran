@@ -1,0 +1,38 @@
+{
+    "name": "@bitran-js/core",
+    "version": "1.0.0-dev.7",
+    "type": "module",
+    "description": "Bitran types, schemas and DOM",
+    "keywords": [
+        "bitran",
+        "dom",
+        "node",
+        "element",
+        "text"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Gwynerva/bitran.git",
+        "directory": "packages/core"
+    },
+    "scripts": {
+        "build": "bun run prepack",
+        "prepack": "bun unbuild"
+    },
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.mjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "unbuild": "^3.3.1"
+    }
+}

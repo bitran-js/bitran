@@ -1,0 +1,17 @@
+{
+    "private": true,
+    "name": "@bitran-js/playground-renderer-vue",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "dependencies": {
+        "@bitran-js/core": "workspace:*",
+        "@bitran-js/transpiler": "workspace:*",
+        "@bitran-js/renderer-vue": "workspace:*"
+    },
+    "devDependencies": {
+        "vite": "^6.1.0",
+        "@vitejs/plugin-vue": "^5.2.1"
+    }
+}

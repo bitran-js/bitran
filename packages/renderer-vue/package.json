@@ -1,0 +1,45 @@
+{
+    "name": "@bitran-js/renderer-vue",
+    "version": "1.0.0-dev.7",
+    "type": "module",
+    "description": "Bitran Vue Renderer",
+    "keywords": [
+        "bitran",
+        "text",
+        "vue"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Gwynerva/bitran.git",
+        "directory": "packages/renderer-vue"
+    },
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.mjs"
+        },
+        "./scss/*": "./dist/public/scss/*"
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "build": "bun run prepack",
+        "prepack": "bun unbuild"
+    },
+    "peerDependencies": {
+        "@bitran-js/core": "workspace:1.0.0-dev.7",
+        "@bitran-js/transpiler": "workspace:1.0.0-dev.7",
+        "vue": "^3.5.13",
+        "sass": "^1.85.1"
+    },
+    "devDependencies": {
+        "unbuild": "^3.3.1",
+        "vite": "^6.1.0",
+        "vue-tsc": "^2.2.2"
+    }
+}
