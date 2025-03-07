@@ -13,7 +13,7 @@
     ],
     "scripts": {
         "pretty": "bun prettier --write .",
-        "build": "bun run pretty && bun run scripts/build",
+        "build": "bun run scripts/build",
         "publish": "bun run build && bun run scripts/publish"
     },
     "devDependencies": {
