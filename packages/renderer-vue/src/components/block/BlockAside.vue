@@ -29,7 +29,7 @@ const iconSvg = await getElementIcon(renderer);
 </template>
 
 <style lang="scss">
-@use '../../styles/utils';
+@use '../../styles/utils' as bitranUtils;
 
 .bitran-blockAside {
     flex-shrink: 0;
@@ -39,7 +39,7 @@ const iconSvg = await getElementIcon(renderer);
     border-bottom-left-radius: 5px;
     min-height: 30px;
 
-    @include utils.transition(background);
+    @include bitranUtils.transition(background);
 
     &:hover,
     &:active {
@@ -59,7 +59,7 @@ const iconSvg = await getElementIcon(renderer);
         color: var(--bitran_text);
         opacity: 0.375;
 
-        @include utils.transition(opacity);
+        @include bitranUtils.transition(opacity);
 
         svg {
             fill: currentColor;

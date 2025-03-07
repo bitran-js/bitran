@@ -28,6 +28,7 @@
         "dist"
     ],
     "scripts": {
+        "dev": "bun run build -- --stub",
         "build": "bun run prepack",
         "prepack": "bun unbuild"
     },

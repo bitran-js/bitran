@@ -15,8 +15,14 @@ const inliners = node.parseData;
 </template>
 
 <style lang="scss">
+@use '../../public/scss/bp' as bitranBp;
+
 .bitran-paragraph {
     margin: 0;
     text-align: justify;
+
+    @include bitranBp.below('mobile') {
+        text-align: left;
+    }
 }
 </style>

@@ -78,7 +78,7 @@ provide(domStateKey, {
 }
 
 .bitran-component {
-    container: bitran / inline-start;
+    container: bitran / inline-size;
     font-family: var(--bitran_fontMain);
     color: var(--bitran_text);
 }
