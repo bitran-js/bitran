@@ -1,6 +1,6 @@
 {
     "name": "@bitran-js/core",
-    "version": "1.0.0-dev.7",
+    "version": "1.0.0-dev.8",
     "type": "module",
     "description": "Bitran types, schemas and DOM",
     "keywords": [
@@ -33,6 +33,6 @@
         "dist"
     ],
     "devDependencies": {
-        "unbuild": "^3.3.1"
+        "unbuild": "^3.5.0"
     }
 }

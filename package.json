@@ -12,7 +12,8 @@
         "playgrounds/*"
     ],
     "scripts": {
-        "build": "bun x prettier . -w && bun run scripts/build",
+        "pretty": "bun prettier --write .",
+        "build": "bun run pretty && bun run scripts/build",
         "publish": "bun run build && bun run scripts/publish"
     },
     "devDependencies": {
