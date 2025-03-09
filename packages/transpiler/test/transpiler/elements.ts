@@ -68,7 +68,7 @@ export class HeadingParser extends BlockParseFactory<HeadingSchema> {
         };
     }
 
-    override alterAutoId(): string {
+    override async alterAutoId() {
         return 'custom-heading:' + this.title;
     }
 }
@@ -93,8 +93,8 @@ export class ObjHeadingParser extends ObjBlockParseFactory<HeadingSchema> {
 }
 
 export class HeadingStringifier extends StringifyFactory<HeadingSchema> {
-    override async stringifyElement(headingNode: HeadingNode) {
-        const parseData = headingNode.parseData;
+    override async stringifyElement() {
+        const { parseData } = this.payload();
         if (parseData.obj) {
             const rawObj = { ...parseData };
             delete rawObj.obj;
@@ -185,8 +185,9 @@ export class BoldParser extends RegexpInlinerParseFactory<BoldSchema> {
 }
 
 export class BoldStringifier extends StringifyFactory<BoldSchema> {
-    override async stringifyElement(boldNode: BoldNode) {
-        return `**${boldNode.parseData}**`;
+    override async stringifyElement() {
+        const { parseData } = this.payload();
+        return `**${parseData}**`;
     }
 }
 

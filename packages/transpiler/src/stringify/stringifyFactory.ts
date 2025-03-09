@@ -17,10 +17,18 @@ export abstract class StringifyFactory<
     stringifyOptions!: StringifyOptions;
     elementNode!: ElementNode<T>;
 
-    abstract stringifyElement(elementNode: ElementNode<T>): Promise<string>;
+    abstract stringifyElement(): Promise<string>;
 
     async stringify(node: Node) {
         return this.stringifier.stringify(node, this.stringifyOptions);
+    }
+
+    payload() {
+        return {
+            node: this.elementNode,
+            parseData: this.elementNode.parseData,
+            meta: this.elementNode.meta,
+        } as const;
     }
 }
 
@@ -29,10 +37,10 @@ export abstract class ObjStringifyFactory<
 > extends StringifyFactory<T> {
     abstract objName: string;
 
-    abstract createRawObject(elementNode: ElementNode<T>): Promise<RawObject>;
+    abstract createRawObject(): Promise<RawObject>;
 
-    async stringifyElement(elementNode: ElementNode<T>) {
-        const obj = await this.createRawObject(elementNode);
+    async stringifyElement() {
+        const obj = await this.createRawObject();
         return objToText(this.objName, obj);
     }
 }
