@@ -31,16 +31,16 @@ export class HashAutoId extends AutoId {
     }
 }
 
-export function createAutoId(
+export async function createAutoId(
     autoId: AutoId,
     factory: ParseFactory | undefined,
     elementNode: ElementNode,
     strNode: string,
-): string {
+): Promise<string> {
     let id = autoId.generate(elementNode, strNode);
 
     if (factory) {
-        id = factory.alterAutoId(id, elementNode, strNode);
+        id = await factory.alterAutoId(id, elementNode, strNode);
     }
 
     id = autoId.finalize(id);

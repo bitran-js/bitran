@@ -48,7 +48,11 @@ export abstract class ParseFactory<
         };
     }
 
-    alterAutoId(id: string, elementNode: ElementNode, strNode: string) {
+    async alterAutoId(
+        id: string,
+        elementNode: ElementNode,
+        strNode: string,
+    ): Promise<string> {
         return id;
     }
 
