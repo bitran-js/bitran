@@ -54,7 +54,6 @@ provide(domStateKey, {
     --bitran_textDisabled: light-dark(#b9b9b9, #4f4f4f);
 
     --bitran_colorShade1: light-dark(#e1e1e1, #383838);
-
     --bitran_colorBrand: light-dark(#118fe7, #3da1e7);
     --bitran_colorError: light-dark(#cf2f2f, #e95c5e);
 
