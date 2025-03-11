@@ -87,7 +87,7 @@ export class Stringifier {
             factory.stringifyOptions = resolvedOptions;
             factory.elementNode = node;
 
-            let result = await factory.stringifyElement(node);
+            let result = await factory.stringifyElement();
 
             if (Object.keys(node.meta).length > 0) {
                 const isBlock = node instanceof BlockNode;

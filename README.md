@@ -16,3 +16,17 @@ Bitran (**B**lock & **I**nliner **tran**spiler) is a highly customizable text pr
 - Flexible meta syntax with YAML support
 - Handy DOM representation of text
 - Built-in ID assignment and error handling
+
+## Monorepo Structure
+
+- `package/core` — Bitran types, schemas and DOM
+- `package/transpiler` — text → (**parse**) → DOM → (**stringify**) → text
+- `package/renderer-vue` — rendering DOM with Vue framework
+
+## Local Development
+
+1. Fork `bitran-js/bitran` repository to your GitHub account and then clone it to your local device
+2. Install [Bun](https://bun.sh/) if you does not have it already
+3. Run `bun install` and then `bun run build`
+
+Now the project is ready for your edits!
