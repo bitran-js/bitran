@@ -1,0 +1,24 @@
+{
+    "private": true,
+    "name": "bitran-monorepo",
+    "type": "module",
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Gwynerva/bitran.git"
+    },
+    "workspaces": [
+        "packages/*",
+        "playgrounds/*"
+    ],
+    "scripts": {
+        "build": "bun x prettier . -w && bun run scripts/build",
+        "publish": "bun run build && bun run scripts/publish"
+    },
+    "devDependencies": {
+        "@types/jest": "^29.5.14",
+        "@types/node": "^22.13.9",
+        "prettier": "^3.5.3",
+        "typescript": "^5.8.2"
+    }
+}

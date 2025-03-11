@@ -1,0 +1,40 @@
+{
+    "name": "@bitran-js/transpiler",
+    "version": "1.0.0-dev.7",
+    "type": "module",
+    "description": "Bitran toolkit for parsing text in DOM and stringifying it back",
+    "keywords": [
+        "bitran",
+        "text",
+        "transpiler"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Gwynerva/bitran.git",
+        "directory": "packages/transpiler"
+    },
+    "scripts": {
+        "build": "bun run prepack",
+        "prepack": "bun unbuild"
+    },
+    "main": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.mjs",
+            "require": "./dist/index.mjs"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "unbuild": "^3.3.1"
+    },
+    "peerDependencies": {
+        "@bitran-js/core": "workspace:1.0.0-dev.7",
+        "yaml": "^2.7.0"
+    }
+}
