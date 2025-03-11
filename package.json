@@ -12,12 +12,13 @@
         "playgrounds/*"
     ],
     "scripts": {
-        "build": "bun x prettier . -w && bun run scripts/build",
+        "pretty": "bun prettier --write .",
+        "build": "bun run scripts/build",
         "publish": "bun run build && bun run scripts/publish"
     },
     "devDependencies": {
         "@types/jest": "^29.5.14",
-        "@types/node": "^22.13.9",
+        "@types/node": "^22.13.10",
         "prettier": "^3.5.3",
         "typescript": "^5.8.2"
     }

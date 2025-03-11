@@ -13,6 +13,8 @@ export interface BitranProps {
     editMode?: boolean;
     formatText?: (text: string) => string;
     RenderWrapper?: Component<{ mode: 'hybrid' | 'client' }>;
+    isDev?: boolean;
+    isServer?: boolean;
 }
 
 //
@@ -66,4 +68,12 @@ export function injectFormatText() {
 export function injectRenderWrapper() {
     const props = injectBitranProps();
     return props.RenderWrapper ?? DefaultRenderWrapper;
+}
+
+export function injectEnvironment() {
+    const props = injectBitranProps();
+    return {
+        isDev: props.isDev,
+        isServer: props.isServer,
+    };
 }

@@ -91,7 +91,7 @@ export class Parser {
 
             try {
                 block.parseData = await factory.createParseData(restText);
-                block.autoId = createAutoId(
+                block.autoId = await createAutoId(
                     options.autoId,
                     factory,
                     block,
@@ -113,7 +113,7 @@ export class Parser {
 
         const paragraph = new ParagraphNode();
         paragraph.meta = meta;
-        paragraph.autoId = createAutoId(
+        paragraph.autoId = await createAutoId(
             options.autoId,
             undefined,
             paragraph,
@@ -211,7 +211,7 @@ export class Parser {
         const pushTextNode = async (text: string) => {
             const textNode = new TextNode();
             textNode.parseData = text;
-            textNode.autoId = createAutoId(
+            textNode.autoId = await createAutoId(
                 resolvedOptions.autoId,
                 undefined,
                 textNode,
@@ -248,7 +248,7 @@ export class Parser {
 
             try {
                 inliner.parseData = await factory.createParseData(parseText);
-                inliner.autoId = createAutoId(
+                inliner.autoId = await createAutoId(
                     resolvedOptions.autoId,
                     factory,
                     inliner,

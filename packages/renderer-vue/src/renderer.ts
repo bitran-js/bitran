@@ -17,6 +17,13 @@ export type ElementVueRenderer<
     ssr?: boolean;
     icon?: () => Promise<string>;
     languages?: Record<string, () => Promise<K>>;
+    canRender?: (ctx: {
+        isDev?: boolean;
+        isProd?: boolean;
+        isClient?: boolean;
+        isServer?: boolean;
+        node: ElementNode<T>;
+    }) => Promise<boolean> | boolean;
 } & (T extends { RenderData: any }
     ? {
           createRenderData: (node: ElementNode<T>) => Promise<T['RenderData']>;

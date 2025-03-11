@@ -1,9 +1,9 @@
 <script lang="ts" setup>
-import { Bitran } from '@renderer';
-
-import Theme from './components/Theme.vue';
 import { ref, watch } from 'vue';
 import { defineBitranTranspiler } from '@bitran-js/transpiler';
+import { Bitran } from '@bitran-js/renderer-vue';
+
+import Theme from './components/Theme.vue';
 
 const inputValue = ref('Sample Text!\n\nHello World!');
 const biCode = ref(inputValue.value);

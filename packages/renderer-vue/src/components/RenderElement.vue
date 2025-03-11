@@ -7,7 +7,11 @@ import {
     type ElementNode,
 } from '@bitran-js/core';
 
-import { injectEditMode, injectRenderWrapper } from '../front/bitranProps';
+import {
+    injectEditMode,
+    injectEnvironment,
+    injectRenderWrapper,
+} from '../front/bitranProps';
 import { useElementRenderer } from '../front/element/renderer';
 
 import Block from './block/Block.vue';
@@ -17,6 +21,7 @@ import InlinerLoading from './inliner/InlinerLoading.vue';
 
 const props = defineProps<{ node: ElementNode }>();
 const isBlock = props.node instanceof BlockNode;
+const env = injectEnvironment();
 const RenderWrapper = injectRenderWrapper();
 const editMode = injectEditMode();
 const elementRenderer = useElementRenderer(props.node);
@@ -39,12 +44,24 @@ const ElementLoading = createComponentWithNode(
     isBlock ? BlockLoading : InlinerLoading,
 );
 
+let canRender = true;
+const canRenderFn = elementRenderer.canRender;
+if (!editMode.value && canRenderFn) {
+    canRender = await canRenderFn({
+        isDev: env.isDev,
+        isProd: env.isDev === undefined ? undefined : !env.isDev,
+        isServer: env.isServer,
+        isClient: env.isServer === undefined ? undefined : !env.isServer,
+        node: props.node,
+    });
+}
+
 const loadingVisible = ref(false);
 onMounted(() => setTimeout(() => (loadingVisible.value = true), 500));
 </script>
 
 <template>
-    <RenderWrapper :mode="renderMode">
+    <RenderWrapper v-if="canRender" :mode="renderMode">
         <ElementWrapper v-if="renderMode === 'hybrid'" />
         <Suspense v-else>
             <ElementWrapper />
