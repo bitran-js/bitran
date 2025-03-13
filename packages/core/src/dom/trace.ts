@@ -1,9 +1,15 @@
 import { Node } from './node';
 import { ElementNode } from './element';
 import { RootNode } from './group';
-import { walkUp } from './walk';
+import { walkDown, walkUp } from './walk';
 
-export async function traceNode(node: Node): Promise<string> {
+function stringifyNode(node: Node) {
+    return node instanceof ElementNode
+        ? node.constructor.name
+        : `<${node.constructor.name}>`;
+}
+
+export async function traceNodeUp(node: Node): Promise<string> {
     if (!node || !(node instanceof Node)) return '';
 
     const nodes: Node[] = [node];
@@ -13,11 +19,6 @@ export async function traceNode(node: Node): Promise<string> {
     });
 
     nodes.reverse();
-
-    const stringifyNode = (node: Node) =>
-        node instanceof ElementNode
-            ? node.constructor.name
-            : `<${node.constructor.name}>`;
 
     const rootNode = nodes.shift()!;
 
@@ -40,4 +41,23 @@ export async function traceNode(node: Node): Promise<string> {
     });
 
     return traceLines.join('\n').trim();
+}
+
+export async function traceNodeDown(node: Node): Promise<string> {
+    if (!node || !(node instanceof Node)) return '';
+
+    const result: string[] = [stringifyNode(node)];
+    const levels = new Map<Node, number>();
+    levels.set(node, 0);
+
+    await walkDown(node, (child) => {
+        const parentLevel = levels.get(child.parent!) || 0;
+        const childLevel = parentLevel + 1;
+        levels.set(child, childLevel);
+
+        const indent = ' '.repeat(childLevel * 2);
+        result.push(`${indent}${stringifyNode(child)}`);
+    });
+
+    return result.join('\n');
 }
