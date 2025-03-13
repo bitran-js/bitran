@@ -32,7 +32,7 @@ provide(domStateKey, {
 </template>
 
 <style lang="scss">
-@use '../public/scss/def';
+@use '../scss/def';
 
 //
 // Variables to customize Bitran

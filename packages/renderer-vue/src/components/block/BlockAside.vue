@@ -29,7 +29,7 @@ const iconSvg = await getElementIcon(renderer);
 </template>
 
 <style lang="scss">
-@use '../../styles/utils' as bitranUtils;
+@use '../../scss/utils' as bitranUtils;
 
 .bitran-blockAside {
     flex-shrink: 0;

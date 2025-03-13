@@ -16,7 +16,7 @@ const inliners = useElementParseData<ParagraphSchema>();
 </template>
 
 <style lang="scss">
-@use '../../public/scss/bp' as bitranBp;
+@use '../../scss/bp' as bitranBp;
 
 .bitran-paragraph {
     margin: 0;
