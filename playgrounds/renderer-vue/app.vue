@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { ref, watch } from 'vue';
+import { ref, shallowRef, watch } from 'vue';
+import { RootNode } from '@bitran-js/core';
 import { defineBitranTranspiler } from '@bitran-js/transpiler';
 import { Bitran } from '@bitran-js/renderer-vue';
 
@@ -7,19 +8,27 @@ import Theme from './components/Theme.vue';
 
 const inputValue = ref('Sample Text!\n\nHello World!');
 const biCode = ref(inputValue.value);
+const root = shallowRef<RootNode>(new RootNode());
 const editMode = ref(false);
-
 const renderKey = ref(0);
+
+const transpiler = defineBitranTranspiler({});
+const renderers = {};
 
 let inputTimeout: any;
 
-watch(inputValue, (newValue) => {
-    clearTimeout(inputTimeout);
-    inputTimeout = setTimeout(() => {
-        biCode.value = newValue;
-        renderKey.value++;
-    }, 300);
-});
+watch(
+    inputValue,
+    (newValue) => {
+        clearTimeout(inputTimeout);
+        inputTimeout = setTimeout(async () => {
+            biCode.value = newValue;
+            root.value = await transpiler.parser.parse(newValue);
+            renderKey.value++;
+        }, 300);
+    },
+    { immediate: true },
+);
 
 watch(editMode, () => {
     renderKey.value++;
@@ -38,9 +47,9 @@ watch(editMode, () => {
             </header>
             <main>
                 <Bitran
-                    :transpiler="defineBitranTranspiler({})"
-                    :renderers="{}"
-                    :content="{ biCode }"
+                    :transpiler
+                    :renderers
+                    :content="{ root }"
                     :key="renderKey"
                     :editMode
                 />

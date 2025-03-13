@@ -6,15 +6,11 @@ import { domStateKey } from '../front/domState';
 
 import Render from './Render.vue';
 
-//
-// TODO: Accept parsed DOM directly, not content!
-// Then use DOM Patches system to make changes
-//
-
 const props = defineProps<BitranProps>();
 provide(bitranPropsKey, props);
 
-const root = await props.transpiler.parser.parse(props.content.biCode);
+const root = props.content.root;
+
 provide(domStateKey, {
     root,
 });
