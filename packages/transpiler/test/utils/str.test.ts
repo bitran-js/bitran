@@ -5,6 +5,7 @@ import {
     textToObj,
     textToStrBlocks,
     tryParseInt,
+    dedent,
 } from '../../src/utils/str';
 
 describe('normalizeLineEndings', () => {
@@ -111,6 +112,41 @@ describe('indent', () => {
         expect(indent('a', 0)).toBe('a');
         expect(indent('a', 1)).toBe(' a');
         expect(indent('a', 5)).toBe('     a');
+    });
+});
+
+describe('dedent', () => {
+    it('should handle empty string', () => {
+        expect(dedent('')).toBe('');
+    });
+
+    it('should not change string with no indentation', () => {
+        const text = 'First line\nSecond line';
+        expect(dedent(text)).toBe(text);
+    });
+
+    it('should remove consistent indentation', () => {
+        const text = '    First line\n    Second line\n    Third line';
+        const expected = 'First line\nSecond line\nThird line';
+        expect(dedent(text)).toBe(expected);
+    });
+
+    it('should remove indentation based on first non-empty line', () => {
+        const text = '\n    First line\n        Second line\n    Third line';
+        const expected = '\nFirst line\n    Second line\nThird line';
+        expect(dedent(text)).toBe(expected);
+    });
+
+    it('should preserve empty lines', () => {
+        const text = '    First line\n\n    Second line';
+        const expected = 'First line\n\nSecond line';
+        expect(dedent(text)).toBe(expected);
+    });
+
+    it('should handle lines with less indentation than first line', () => {
+        const text = '      First line\n    Second line\n  Third line';
+        const expected = 'First line\nSecond line\nThird line';
+        expect(dedent(text)).toBe(expected);
     });
 });
 

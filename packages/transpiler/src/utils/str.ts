@@ -46,6 +46,39 @@ export function indent(text: string, indentSize = 4): string {
     });
 }
 
+export function dedent(text: string): string {
+    if (!text) return '';
+
+    const lines = text.split('\n');
+
+    // Find the indentation of the first non-empty line
+    let indent = 0;
+    for (const line of lines) {
+        if (line.trim()) {
+            indent = line.length - line.trimStart().length;
+            break;
+        }
+    }
+
+    // If no indentation, return the original text
+    if (indent === 0) return text;
+
+    // Remove indentation from all lines
+    return lines
+        .map((line) => {
+            const trimmed = line.trim();
+            if (!trimmed) return line; // Keep empty lines as is
+
+            const currentIndent = line.length - line.trimStart().length;
+            if (currentIndent >= indent) {
+                return line.substring(indent); // Remove the exact indent amount
+            } else {
+                return trimmed; // Remove all spaces if less than indent amount
+            }
+        })
+        .join('\n');
+}
+
 export function tryParseInt(text: string) {
     const parsedInt = parseInt(text);
     return Number.isNaN(parsedInt) ? text : parsedInt;
