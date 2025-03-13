@@ -8,6 +8,7 @@ export * from './front/bitranProps';
 
 export * from './front/element/ensureComponent';
 export * from './front/element/icon';
+export * from './front/element/meta';
 export * from './front/element/node';
 export * from './front/element/parseData';
 export * from './front/element/phrases';
