@@ -5,18 +5,18 @@ import {
     type GenericElementSchema,
 } from '@bitran-js/core';
 
-import type { ElementPhrases } from './language';
+import type { ElementPhrases, CustomPhrases } from './language';
 
 export type ElementVueRenderer<
     T extends GenericElementSchema = GenericElementSchema,
-    K extends ElementPhrases = ElementPhrases,
+    K extends CustomPhrases = {},
 > = {
     Node: ClassOf<ElementNode<T>>;
     component: () => Promise<Component>;
     customLayout?: boolean;
     ssr?: boolean;
     icon?: () => Promise<string>;
-    languages?: Record<string, () => Promise<K>>;
+    languages?: Record<string, () => Promise<ElementPhrases<K>>>;
     canRender?: (ctx: {
         isDev?: boolean;
         isProd?: boolean;

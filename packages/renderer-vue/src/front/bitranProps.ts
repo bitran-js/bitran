@@ -9,6 +9,7 @@ export interface BitranProps {
     transpiler: BitranTranspiler;
     renderers: ElementVueRenderers;
     content: BitranContent;
+    language?: string;
     prefixId?: string;
     editMode?: boolean;
     formatText?: (text: string) => string;
@@ -76,4 +77,9 @@ export function injectEnvironment() {
         isDev: props.isDev,
         isServer: props.isServer,
     };
+}
+
+export function injectLanguage() {
+    const props = injectBitranProps();
+    return props.language;
 }

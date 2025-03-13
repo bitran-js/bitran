@@ -1,19 +1,24 @@
 import { type ElementVueRenderer } from './renderer';
 
-type Phrases = Record<string, string | ((...args: any[]) => string)>;
+export type CustomPhrases = Record<
+    string,
+    string | ((...args: any[]) => string)
+>;
 
-export interface ElementPhrases extends Phrases {
+export interface DefaultPhrases {
     _element_title: string;
 }
 
-export function defineLanguage<T extends ElementPhrases = ElementPhrases>(
-    language: T,
+export type ElementPhrases<T extends CustomPhrases = {}> = DefaultPhrases & T;
+
+export function defineLanguage<T extends CustomPhrases = {}>(
+    language: ElementPhrases<T>,
 ) {
     return language;
 }
 
-export function defineLanguages<T extends ElementPhrases>(
-    loaders: Record<string, () => Promise<{ default: T }>>,
+export function defineLanguages<T extends CustomPhrases = {}>(
+    loaders: Record<string, () => Promise<{ default: ElementPhrases<T> }>>,
 ) {
     return Object.fromEntries(
         Object.entries(loaders).map(([languageCode, loader]) => [
@@ -23,23 +28,26 @@ export function defineLanguages<T extends ElementPhrases>(
     );
 }
 
-export async function createPhraseCaller<
-    T extends ElementPhrases = ElementPhrases,
->(renderer: ElementVueRenderer, languageCode: string) {
+export async function createPhraseCaller<T extends CustomPhrases = {}>(
+    renderer: ElementVueRenderer,
+    languageCode: string,
+) {
     let phrases = {
         _element_title: renderer.Node.constructor.name,
-    } as T;
+    } as ElementPhrases<T>;
 
     if (renderer.languages?.[languageCode]) {
         const loadedPhrases = await renderer.languages[languageCode]();
         phrases = { ...phrases, ...loadedPhrases };
     }
 
-    const caller = (key: keyof T, ...args: any[]): string => {
+    const caller = (key: keyof ElementPhrases<T>, ...args: any[]): string => {
         const phrase = phrases[key];
         if (!phrase) return `{{ ${String(key)} }}`;
-        return typeof phrase === 'function' ? phrase(...args) : phrase;
+        return typeof phrase === 'function'
+            ? (phrase(...args) as string)
+            : (phrase as string);
     };
 
-    return caller as (key: keyof T, ...args: any[]) => string;
+    return caller as (key: keyof ElementPhrases<T>, ...args: any[]) => string;
 }
