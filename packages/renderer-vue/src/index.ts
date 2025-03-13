@@ -6,6 +6,11 @@ export * from './content';
 
 export * from './front/bitranProps';
 
+export * from './front/element/ensureComponent';
+export * from './front/element/icon';
+export * from './front/element/node';
+export * from './front/element/parseData';
+export * from './front/element/phrases';
 export * from './front/element/props';
 export * from './front/element/renderData';
 export * from './front/element/renderer';

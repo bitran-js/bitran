@@ -5,11 +5,11 @@ import { setupAppElement } from '../../front/element/setup';
 import { useElementRenderer } from '../../front/element/renderer';
 import { getElementIcon } from '../../icon';
 
-const props = defineProps<{ node: InlinerNode }>();
+defineProps<{ node: InlinerNode }>();
 
-const { ElementComponent, error } = await setupAppElement(props.node);
+const { ElementComponent, error } = await setupAppElement();
 
-const renderer = useElementRenderer(props.node);
+const renderer = useElementRenderer();
 const iconSvg = await getElementIcon(renderer);
 </script>
 

@@ -6,13 +6,13 @@ import { useElementRenderer } from '../../front/element/renderer';
 
 import TransitionFade from '../transition/TransitionFade.vue';
 
-const props = defineProps<{
+defineProps<{
     node: BlockNode;
     hovered: boolean;
     error?: any;
 }>();
 
-const renderer = useElementRenderer(props.node);
+const renderer = useElementRenderer();
 const iconSvg = await getElementIcon(renderer);
 </script>
 

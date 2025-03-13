@@ -10,7 +10,7 @@ import BlockFloat from './BlockFloat.vue';
 import BlockAside from './BlockAside.vue';
 
 const props = defineProps<{ node: BlockNode }>();
-const renderer = useElementRenderer(props.node);
+const renderer = useElementRenderer();
 const blockElement = useTemplateRef('block');
 const prefixId = ''; //injectPrefixId();
 
@@ -22,7 +22,7 @@ const blockId = (() => {
     return (prefixId ? prefixId + ':' : '') + props.node.id;
 })();
 
-const { ElementComponent, error } = await setupAppElement(props.node);
+const { ElementComponent, error } = await setupAppElement();
 
 onMounted(() => {
     blockElement.value!.addEventListener('mouseenter', () => {
