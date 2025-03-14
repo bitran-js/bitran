@@ -77,5 +77,6 @@ provide(domStateKey, {
     font-family: var(--bitran_fontMain);
     color: var(--bitran_text);
     interpolate-size: allow-keywords;
+    hyphens: auto;
 }
 </style>
