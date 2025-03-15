@@ -28,6 +28,13 @@ export function defineLanguages<T extends CustomPhrases = {}>(
     );
 }
 
+export async function getLanguage(
+    renderer: ElementVueRenderer,
+    languageCode: string,
+) {
+    return (await renderer.languages?.[languageCode]?.()) ?? {};
+}
+
 export async function createPhraseCaller<T extends CustomPhrases = {}>(
     renderer: ElementVueRenderer,
     languageCode: string,
@@ -37,7 +44,7 @@ export async function createPhraseCaller<T extends CustomPhrases = {}>(
     } as ElementPhrases<T>;
 
     if (renderer.languages?.[languageCode]) {
-        const loadedPhrases = await renderer.languages[languageCode]();
+        const loadedPhrases = await getLanguage(renderer, languageCode);
         phrases = { ...phrases, ...loadedPhrases };
     }
 
