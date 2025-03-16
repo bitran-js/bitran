@@ -44,7 +44,7 @@ provide(domStateKey, {
     --bitran_transitionFunction: ease-out;
 
     --bitran_text: light-dark(#333333, #c8c8c8);
-    --bitran_textStrong: light-dark(#232323, #e1e1e1);
+    --bitran_textDeep: light-dark(#232323, #e1e1e1);
     --bitran_textMuted: light-dark(#696969, #7f7f7f);
     --bitran_textDimmed: light-dark(#969696, #616161);
     --bitran_textDisabled: light-dark(#b9b9b9, #4f4f4f);
