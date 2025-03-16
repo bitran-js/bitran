@@ -73,7 +73,6 @@ onMounted(() => {
 
         .bitran-blockMain {
             flex: 1;
-            overflow: auto;
         }
     }
 
