@@ -18,54 +18,67 @@ const iconSvg = await getElementIcon(renderer);
 
 <template>
     <div class="bitran-blockAside">
-        <TransitionFade>
-            <div
-                v-if="hovered || error"
-                class="bitran-blockAsideIcon"
-                v-html="iconSvg"
-            ></div>
-        </TransitionFade>
+        <div class="bitran-blockAsideInner">
+            <TransitionFade>
+                <div
+                    v-if="hovered || error"
+                    class="bitran-blockAsideIcon"
+                    v-html="iconSvg"
+                ></div>
+            </TransitionFade>
+        </div>
     </div>
 </template>
 
 <style lang="scss">
 @use '../../scss/utils' as bitranUtils;
+@use '../../scss/bp';
 
 .bitran-blockAside {
     flex-shrink: 0;
-    width: var(--_bitran_asideBody);
-    margin-right: var(--_bitran_asideGap);
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-    min-height: 30px;
-
-    @include bitranUtils.transition(background);
+    width: var(--_bitran_asideWidth);
+    padding: 0 2px;
 
     &:hover,
     &:active {
-        background: var(--bitran_colorShade1);
+        > .bitran-blockAsideInner {
+            background: var(--bitran_colorShade1);
 
-        .bitran-blockAsideIcon {
-            opacity: 1;
+            .bitran-blockAsideIcon {
+                opacity: 1;
+            }
+        }
+    }
+
+    .bitran-blockAsideInner {
+        position: relative;
+        height: 100%;
+        border-radius: 3px;
+        @include bitranUtils.transition(background);
+    }
+
+    @include bp.g-below('mobile') {
+        padding: 0;
+        .bitran-blockAsideInner {
+            border-radius: 0;
         }
     }
 
     .bitran-blockAsideIcon {
         position: sticky;
         top: 0;
-        display: flex;
-        justify-content: center;
-        padding: 6px 0;
+        width: 100%;
+        text-align: center;
         color: var(--bitran_text);
         opacity: 0.375;
-
         @include bitranUtils.transition(opacity);
 
         svg {
+            display: block;
+            margin: 0 auto;
+            padding: 3px 0;
             fill: currentColor;
-            --_iconSize: 64%;
-            width: var(--_iconSize);
-            height: var(--_iconSize);
+            width: 64%;
         }
     }
 }

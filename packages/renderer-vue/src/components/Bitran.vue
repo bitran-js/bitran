@@ -29,6 +29,7 @@ provide(domStateKey, {
 
 <style lang="scss">
 @use '../scss/def';
+@use '../scss/bp';
 
 //
 // Variables to customize Bitran
@@ -53,19 +54,21 @@ provide(domStateKey, {
     --bitran_colorBrand: light-dark(#118fe7, #3da1e7);
     --bitran_colorError: light-dark(#cf2f2f, #e95c5e);
 
-    --bitran_fontMain: sans-serif;
-    --bitran_fontAlt: serif;
-
-    // Internal variables
-
-    --_bitran_asideBody: #{def.$asideBody};
-    --_bitran_asideGap: #{def.$asideGap};
-    --_bitran_asideWidth: #{def.$asideWidth};
+    --bitran_fontMain: inherit;
+    --bitran_fontAlt: inherit;
 }
 
 //
 //
 //
+
+:root {
+    --_bitran_asideWidth: 20px;
+
+    @include bp.g-below('mobile') {
+        --_bitran_asideWidth: 12px;
+    }
+}
 
 .bitran-component,
 .bitran-component * {

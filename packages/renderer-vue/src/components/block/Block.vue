@@ -61,6 +61,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+@use '../../scss/bp';
+
 .bitran-blockContainer {
     position: relative;
 
@@ -81,7 +83,7 @@ onMounted(() => {
     //
 
     &.bitran-error {
-        .bitran-blockAside,
+        .bitran-blockAsideInner,
         .bitran-blockMain {
             background: color-mix(
                 in srgb,
@@ -93,13 +95,19 @@ onMounted(() => {
         .bitran-blockMain {
             padding: 8px;
             color: var(--bitran_colorError);
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
+            border-radius: 3px;
         }
 
         .bitran-blockAsideIcon {
             opacity: 1;
             color: var(--bitran_colorError);
+        }
+
+        @include bp.g-below('mobile') {
+            .bitran-blockMain {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }
