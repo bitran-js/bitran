@@ -10,7 +10,7 @@ import BlockFloat from './BlockFloat.vue';
 import BlockAside from './BlockAside.vue';
 
 const props = defineProps<{ node: BlockNode }>();
-const renderer = useElementRenderer(props.node);
+const renderer = useElementRenderer();
 const blockElement = useTemplateRef('block');
 const prefixId = ''; //injectPrefixId();
 
@@ -22,7 +22,7 @@ const blockId = (() => {
     return (prefixId ? prefixId + ':' : '') + props.node.id;
 })();
 
-const { ElementComponent, error } = await setupAppElement(props.node);
+const { ElementComponent, error } = await setupAppElement();
 
 onMounted(() => {
     blockElement.value!.addEventListener('mouseenter', () => {
@@ -61,6 +61,8 @@ onMounted(() => {
 </template>
 
 <style lang="scss">
+@use '../../scss/bp';
+
 .bitran-blockContainer {
     position: relative;
 
@@ -73,7 +75,6 @@ onMounted(() => {
 
         .bitran-blockMain {
             flex: 1;
-            overflow: auto;
         }
     }
 
@@ -82,7 +83,7 @@ onMounted(() => {
     //
 
     &.bitran-error {
-        .bitran-blockAside,
+        .bitran-blockAsideInner,
         .bitran-blockMain {
             background: color-mix(
                 in srgb,
@@ -94,13 +95,19 @@ onMounted(() => {
         .bitran-blockMain {
             padding: 8px;
             color: var(--bitran_colorError);
-            border-top-right-radius: 5px;
-            border-bottom-right-radius: 5px;
+            border-radius: 3px;
         }
 
         .bitran-blockAsideIcon {
             opacity: 1;
             color: var(--bitran_colorError);
+        }
+
+        @include bp.g-below('mobile') {
+            .bitran-blockMain {
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+            }
         }
     }
 }

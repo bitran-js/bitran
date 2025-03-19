@@ -7,7 +7,7 @@ import {
     InlinerErrorNode,
     paragraphName,
     textName,
-    traceNode,
+    traceNodeUp,
     type ClassOf,
     type Node,
 } from '@bitran-js/core';
@@ -76,7 +76,7 @@ export class Stringifier {
         if (node instanceof ElementNode) {
             const Factory = this.factories[node.name];
             if (!Factory) {
-                console.error(traceNode(node));
+                console.error(traceNodeUp(node));
                 throw new Error(
                     `No stringifier found for element "${node?.name || node.constructor.name}"!`,
                 );
@@ -110,7 +110,7 @@ export class Stringifier {
         // ?!
         //
 
-        console.error(traceNode(node));
+        console.error(traceNodeUp(node));
         throw new Error(
             `Unknown node type "${node?.constructor?.name || node?.toString() || node}"!`,
         );

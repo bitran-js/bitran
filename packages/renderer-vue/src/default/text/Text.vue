@@ -4,9 +4,10 @@ import type { TextSchema } from '@bitran-js/core';
 
 import type { ElementProps } from '../../front/element/props';
 import { injectFormatText } from '../../front/bitranProps';
+import { useElementParseData } from '../../front/element/parseData';
 
-const { node } = defineProps<ElementProps<TextSchema>>();
-const text = node.parseData;
+defineProps<ElementProps<TextSchema>>();
+const text = useElementParseData<TextSchema>();
 const pretty = injectFormatText();
 
 const SubNodes: VNode[] = [];

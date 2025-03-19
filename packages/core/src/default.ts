@@ -14,6 +14,10 @@ export type ParagraphSchema = DefineElementSchema<{
 
 export class ParagraphNode extends BlockNode<ParagraphSchema> {
     override name = paragraphName;
+
+    override get children() {
+        return this.parseData ? [this.parseData] : undefined;
+    }
 }
 
 //

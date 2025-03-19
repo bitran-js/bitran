@@ -24,7 +24,7 @@ const isBlock = props.node instanceof BlockNode;
 const env = injectEnvironment();
 const RenderWrapper = injectRenderWrapper();
 const editMode = injectEditMode();
-const elementRenderer = useElementRenderer(props.node);
+const elementRenderer = useElementRenderer();
 
 const renderMode: 'hybrid' | 'client' = (() => {
     if (editMode.value) return 'client';

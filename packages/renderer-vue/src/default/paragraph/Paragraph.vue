@@ -3,9 +3,10 @@ import type { ParagraphSchema } from '@bitran-js/core';
 
 import type { ElementProps } from '../../front/element/props';
 import Render from '../../components/Render.vue';
+import { useElementParseData } from '../../front/element/parseData';
 
-const { node } = defineProps<ElementProps<ParagraphSchema>>();
-const inliners = node.parseData;
+defineProps<ElementProps<ParagraphSchema>>();
+const inliners = useElementParseData<ParagraphSchema>();
 </script>
 
 <template>
@@ -15,7 +16,7 @@ const inliners = node.parseData;
 </template>
 
 <style lang="scss">
-@use '../../public/scss/bp' as bitranBp;
+@use '../../scss/bp' as bitranBp;
 
 .bitran-paragraph {
     margin: 0;

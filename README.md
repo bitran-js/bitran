@@ -6,7 +6,7 @@
 
 Bitran (**B**lock & **I**nliner **tran**spiler) is a highly customizable text processor and transpiler for converting any structured text into programming-friendly DOM (document object model) that consists of elements: blocks and inliners. These elements can be easily analyzed or rendered into any other format: HTML, Vue, etc...
 
-🚧 Project under heavy construction!
+🚧 **Bitran is under heavy development!**
 
 **Key features:**
 
@@ -19,9 +19,9 @@ Bitran (**B**lock & **I**nliner **tran**spiler) is a highly customizable text pr
 
 ## Monorepo Structure
 
-- `package/core` — Bitran types, schemas and DOM
-- `package/transpiler` — text → (**parse**) → DOM → (**stringify**) → text
-- `package/renderer-vue` — rendering DOM with Vue framework
+- `packages/core` — Bitran types, schemas and DOM
+- `packages/transpiler` — text → (**parse**) → DOM → (**stringify**) → text
+- `packages/renderer-vue` — rendering DOM with Vue framework
 
 ## Local Development
 

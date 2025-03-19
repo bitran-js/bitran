@@ -1,11 +1,14 @@
-import type { GenericElementSchema, ElementNode } from '@bitran-js/core';
+import type { GenericElementSchema } from '@bitran-js/core';
 import type { ElementTranspiler } from '@bitran-js/transpiler';
 
 import { injectBitranTranspiler } from '../bitranProps';
+import { ensureElementComponent } from './ensureComponent';
+import { useElementNode } from './node';
 
-export function useElementTranspiler<T extends GenericElementSchema>(
-    node: ElementNode<T>,
-) {
+export function useElementTranspiler<T extends GenericElementSchema>() {
+    ensureElementComponent();
+    const node = useElementNode<T>();
+
     const elementName = node.name;
     const bitranTranspiler = injectBitranTranspiler();
     const elementTranspiler = bitranTranspiler.transpilers?.[elementName];

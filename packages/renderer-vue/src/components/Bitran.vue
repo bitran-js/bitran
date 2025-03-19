@@ -6,15 +6,11 @@ import { domStateKey } from '../front/domState';
 
 import Render from './Render.vue';
 
-//
-// TODO: Accept parsed DOM directly, not content!
-// Then use DOM Patches system to make changes
-//
-
 const props = defineProps<BitranProps>();
 provide(bitranPropsKey, props);
 
-const root = await props.transpiler.parser.parse(props.content.biCode);
+const root = props.content.root;
+
 provide(domStateKey, {
     root,
 });
@@ -32,7 +28,8 @@ provide(domStateKey, {
 </template>
 
 <style lang="scss">
-@use '../public/scss/def';
+@use '../scss/def';
+@use '../scss/bp';
 
 //
 // Variables to customize Bitran
@@ -48,7 +45,7 @@ provide(domStateKey, {
     --bitran_transitionFunction: ease-out;
 
     --bitran_text: light-dark(#333333, #c8c8c8);
-    --bitran_textStrong: light-dark(#232323, #e1e1e1);
+    --bitran_textDeep: light-dark(#232323, #e1e1e1);
     --bitran_textMuted: light-dark(#696969, #7f7f7f);
     --bitran_textDimmed: light-dark(#969696, #616161);
     --bitran_textDisabled: light-dark(#b9b9b9, #4f4f4f);
@@ -57,19 +54,21 @@ provide(domStateKey, {
     --bitran_colorBrand: light-dark(#118fe7, #3da1e7);
     --bitran_colorError: light-dark(#cf2f2f, #e95c5e);
 
-    --bitran_fontMain: sans-serif;
-    --bitran_fontAlt: serif;
-
-    // Internal variables
-
-    --_bitran_asideBody: #{def.$asideBody};
-    --_bitran_asideGap: #{def.$asideGap};
-    --_bitran_asideWidth: #{def.$asideWidth};
+    --bitran_fontMain: inherit;
+    --bitran_fontAlt: inherit;
 }
 
 //
 //
 //
+
+:root {
+    --_bitran_asideWidth: 20px;
+
+    @include bp.g-below('mobile') {
+        --_bitran_asideWidth: 12px;
+    }
+}
 
 .bitran-component,
 .bitran-component * {
@@ -80,5 +79,7 @@ provide(domStateKey, {
     container: bitran / inline-size;
     font-family: var(--bitran_fontMain);
     color: var(--bitran_text);
+    interpolate-size: allow-keywords;
+    hyphens: auto;
 }
 </style>
