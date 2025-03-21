@@ -28,7 +28,6 @@ provide(domStateKey, {
 </template>
 
 <style lang="scss">
-@use '../scss/def';
 @use '../scss/bp';
 
 //
