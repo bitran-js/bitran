@@ -11,7 +11,7 @@ $bps: (
 }
 
 @mixin below($bp) {
-    @container bitran (max-width: #{map.get($bps, $bp) - 1}) {
+    @container bitran not (min-width: #{map.get($bps, $bp)}) {
         @content;
     }
 }

@@ -38,10 +38,10 @@ defineProps<{ position: 'above' | 'below' }>();
     }
 
     // Hide edge floats when not in edit mode
-    .bitran-component:not(.bitran-editMode)
+    .bitran-blocks:not(.bitran-editMode)
         .bitran-blockContainer:first-child
         > &--above,
-    .bitran-component:not(.bitran-editMode)
+    .bitran-blocks:not(.bitran-editMode)
         .bitran-blockContainer:last-child
         > &--below {
         display: none;

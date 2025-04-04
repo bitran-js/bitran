@@ -35,11 +35,11 @@
     "peerDependencies": {
         "@bitran-js/core": "workspace:1.0.0-dev.11",
         "@bitran-js/transpiler": "workspace:1.0.0-dev.11",
-        "vue": ">=3.5.13",
-        "sass": ">=1.85.1"
+        "vue": "^3.5.13",
+        "sass": "^1.86.0"
     },
     "devDependencies": {
-        "vite": "^6.2.1",
+        "vite": "^6.2.5",
         "vue-tsc": "^2.2.8",
         "mkdist": "^2.2.0"
     }
