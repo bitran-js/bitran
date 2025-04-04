@@ -1,6 +1,6 @@
 {
     "name": "@bitran-js/core",
-    "version": "1.0.0-dev.9",
+    "version": "1.0.0-dev.11",
     "type": "module",
     "description": "Bitran types, schemas and DOM",
     "keywords": [

@@ -16,7 +16,10 @@ export type ElementTranspiler<
     Node: ClassOf<ElementNode<T>>;
     Parsers: ElementParseFactoryClass<T>[];
     Stringifier: ElementStringifyFactoryClass;
-    createPreRenderData?: (node: ElementNode<T>) => Promise<T['RenderData']>;
+    createPreRenderData?: (
+        node: ElementNode<T>,
+        extra?: any,
+    ) => Promise<T['RenderData']>;
 } & (T extends { Provide: any }
     ? { provide: T['Provide'] }
     : { provide?: never });

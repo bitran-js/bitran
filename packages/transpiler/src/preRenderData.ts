@@ -22,13 +22,14 @@ export type PreRenderData = PreRenderDataSuccess | PreRenderDataError;
 export async function createPreRenderData(
     node: ElementNode,
     transpiler: ElementTranspiler,
+    extra?: any,
 ): Promise<PreRenderData | undefined> {
     if (!transpiler?.createPreRenderData) return undefined;
 
     try {
         return {
             type: 'success',
-            data: await transpiler.createPreRenderData(node),
+            data: await transpiler.createPreRenderData(node, extra),
         };
     } catch (error) {
         return {

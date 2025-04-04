@@ -20,6 +20,7 @@ provide(domStateKey, {
     <section
         :class="{
             'bitran-component': true,
+            'bitran-blocks': true,
             'bitran-editMode': editMode,
         }"
     >
@@ -52,6 +53,8 @@ provide(domStateKey, {
     --bitran_colorShade1: light-dark(#e1e1e1, #383838);
     --bitran_colorBrand: light-dark(#118fe7, #3da1e7);
     --bitran_colorError: light-dark(#cf2f2f, #e95c5e);
+
+    --bitran_colorBorder: light-dark(#d7d7d7, #373737);
 
     --bitran_fontMain: inherit;
     --bitran_fontAlt: inherit;
