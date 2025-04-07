@@ -35,8 +35,10 @@ const iconSvg = await getElementIcon(renderer);
 @use '../../scss/bp';
 
 .bitran-blockAside {
-    flex-shrink: 0;
+    position: absolute;
+    left: 0;
     width: var(--_bitran_asideWidth);
+    height: 100%;
     padding: 0 2px;
 
     &:hover,
@@ -52,6 +54,7 @@ const iconSvg = await getElementIcon(renderer);
 
     .bitran-blockAsideInner {
         position: relative;
+        width: 100%;
         height: 100%;
         border-radius: 3px;
         @include bitranUtils.transition(background);

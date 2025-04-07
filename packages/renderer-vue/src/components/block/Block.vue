@@ -71,11 +71,8 @@ onMounted(() => {
     }
 
     .bitran-block {
-        display: flex;
-
-        .bitran-blockMain {
-            flex: 1;
-        }
+        position: relative;
+        padding-left: var(--_bitran_asideWidth);
     }
 
     //
