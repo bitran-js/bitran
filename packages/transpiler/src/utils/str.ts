@@ -1,7 +1,5 @@
 import YAML from 'yaml';
 
-import type { RawObject } from './RawObject';
-
 export function normalizeLineEndings(text: string) {
     return text.replace(/\r/gm, '');
 }
@@ -20,24 +18,21 @@ export function splitFirstLine(text: string) {
     };
 }
 
-export function textToObj(text: string): RawObject {
-    const fallback = {};
-
-    try {
-        const obj = YAML.parse(text);
-        return Object.getPrototypeOf(obj) === Object.prototype ? obj : fallback;
-    } catch {
-        return fallback;
-    }
+export function parseYAML(text: string): any {
+    return YAML.parse(text);
 }
 
-export function objToText(objName: string, obj: RawObject) {
-    if (Object.keys(obj).length === 0)
-        throw new Error('Empty object cannot be converted to text!');
+export function stringifyYAML(content: any): string {
+    let text = YAML.stringify(content, { indent: 4 });
+    text = text.replace(/: \|(-|\+|>)\n/gm, ': |\n'); // Hacky way to bypass all YAML weird "newlines" logic and just use "|" for multiline text
+    text = text.trim();
+    return text;
+}
 
-    let strObj = YAML.stringify(obj, { indent: 4 }).trim();
-    strObj = strObj.replace(/: \|(-|\+|>)\n/gm, ': |\n'); // Hacky way to bypass all YAML weird "newlines" logic and just use "|" for multiline text
-    return `@${objName}\n${indent(strObj)}`;
+export function toStrObjectBlock(objName: string, content: any) {
+    const resolvedContent =
+        typeof content === 'string' ? content : stringifyYAML(content);
+    return `@${objName}\n${indent(resolvedContent)}`;
 }
 
 export function indent(text: string, indentSize = 4): string {

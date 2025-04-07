@@ -1,5 +1,5 @@
 export * from './utils/range';
-export * from './utils/RawObject';
+export * from './utils/plainObject';
 export * from './utils/str';
 
 export * from './parse/autoId';

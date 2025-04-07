@@ -13,11 +13,11 @@ import {
 import {
     defineElementTranspiler,
     defineProvideElementTranspiler,
-    objToText,
+    toStrObjectBlock,
     tryRange,
+    type PlainObject,
     type Range,
 } from '../../src';
-import type { RawObject } from '../../src/utils/RawObject';
 import { StringifyFactory } from '../../src/stringify/stringifyFactory';
 
 //
@@ -77,7 +77,7 @@ export class ObjHeadingParser extends ObjBlockParseFactory<HeadingSchema> {
     override objName = 'heading';
 
     override async parseDataFromObj(
-        obj: RawObject,
+        obj: PlainObject,
     ): Promise<HeadingSchema['ParseData']> {
         if (!obj.level || !obj.title)
             throw new Error('Invalid heading object!');
@@ -98,7 +98,7 @@ export class HeadingStringifier extends StringifyFactory<HeadingSchema> {
         if (parseData.obj) {
             const rawObj = { ...parseData };
             delete rawObj.obj;
-            return objToText('heading', rawObj);
+            return toStrObjectBlock('heading', rawObj);
         } else {
             return `${'#'.repeat(parseData.level)} ${parseData.title}`;
         }
