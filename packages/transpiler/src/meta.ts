@@ -2,7 +2,7 @@ import YAML from 'yaml';
 import type { ElementMeta } from '@bitran-js/core';
 
 import { indent, parseYAML, tryParseInt } from './utils/str';
-import { isPlainObject } from './utils/PlainObject';
+import { isPlainObject } from './utils/plainObject';
 
 //
 // Parse
