@@ -85,6 +85,8 @@ export abstract class BlockParseFactory<
     ): Promise<T['ParseData']>;
 }
 
+export type ObjBlockParseMode = 'string' | 'object' | 'any';
+
 export abstract class ObjBlockParseFactory<
     T extends GenericElementSchema = GenericElementSchema,
 > extends BlockParseFactory<T> {
@@ -120,7 +122,7 @@ export abstract class ObjBlockParseFactory<
         return this.parseDataFromObj(parsedContent, strBlock);
     }
 
-    getParseMode(content: string): 'string' | 'object' | 'any' {
+    getParseMode(content: string): ObjBlockParseMode {
         return 'object';
     }
 }
