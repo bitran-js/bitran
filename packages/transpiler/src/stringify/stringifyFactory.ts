@@ -7,8 +7,7 @@ import type {
 
 import type { Stringifier } from './stringifier';
 import type { StringifyOptions } from './stringifyOptions';
-import type { RawObject } from '../utils/RawObject';
-import { objToText } from '../utils/str';
+import { toStrObjectBlock } from '../utils/str';
 
 export abstract class StringifyFactory<
     T extends GenericElementSchema = GenericElementSchema,
@@ -37,11 +36,11 @@ export abstract class ObjStringifyFactory<
 > extends StringifyFactory<T> {
     abstract objName: string;
 
-    abstract createRawObject(): Promise<RawObject>;
+    abstract createStrData(): Promise<any>;
 
     async stringifyElement() {
-        const obj = await this.createRawObject();
-        return objToText(this.objName, obj);
+        const strData = await this.createStrData();
+        return toStrObjectBlock(this.objName, strData);
     }
 }
 

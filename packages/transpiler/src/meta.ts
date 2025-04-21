@@ -1,7 +1,8 @@
 import YAML from 'yaml';
 import type { ElementMeta } from '@bitran-js/core';
 
-import { indent, textToObj, tryParseInt } from './utils/str';
+import { indent, parseYAML, tryParseInt } from './utils/str';
+import { isPlainObject } from './utils/plainObject';
 
 //
 // Parse
@@ -31,9 +32,20 @@ export function detachMeta(textWithMeta: string): {
 }
 
 export function parseMeta(textMeta: string): ElementMeta {
-    return textMeta.includes('\n')
-        ? textToObj(textMeta)
-        : parseLineMeta(textMeta);
+    const isComplexMeta = textMeta.includes('\n');
+
+    if (isComplexMeta) {
+        try {
+            const meta = parseYAML(textMeta);
+            if (!isPlainObject(meta))
+                throw new Error('Complex meta must be a plain object!');
+            return meta;
+        } catch (e) {
+            return {};
+        }
+    }
+
+    return parseLineMeta(textMeta);
 }
 
 export function parseLineMeta(lineMeta: string): ElementMeta {

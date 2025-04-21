@@ -49,7 +49,7 @@ function createParagraph(...inliners: InlinerNode[]) {
     const paragraph = new ParagraphNode();
     const paragraphInliners = new InlinersNode(paragraph);
     paragraphInliners.setNodes(...inliners);
-    paragraph.parseData = paragraphInliners;
+    paragraph.parseData = { content: paragraphInliners };
     return paragraph;
 }
 

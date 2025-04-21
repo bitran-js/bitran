@@ -4,10 +4,14 @@ import {
     InlinerErrorNode,
     InlinerNode,
     InlinersNode,
+    paragraphAligments,
+    paragraphFonts,
     ParagraphNode,
     RootNode,
     TextNode,
     type ClassOf,
+    type ParagraphAlignment,
+    type ParagraphFont,
 } from '@bitran-js/core';
 
 import { BlockParseFactory, InlinerParseFactory } from './parseFactory';
@@ -123,7 +127,26 @@ export class Parser {
         const inliners = await this.parseInliners(restText, options);
         const inlinersNode = new InlinersNode(paragraph);
         inlinersNode.setNodes(inliners);
-        paragraph.parseData = inlinersNode;
+
+        let alignment: ParagraphAlignment | undefined = undefined;
+        let font: ParagraphFont | undefined = undefined;
+        for (const key of Object.keys(meta)) {
+            const alignmentKey = key.replace(/^text-/, '');
+            const fontKey = key.replace(/^font-/, '');
+            if (paragraphAligments.includes(alignmentKey as any)) {
+                alignment = alignmentKey as any;
+            }
+            if (paragraphFonts.includes(fontKey as any)) {
+                font = fontKey as any;
+            }
+        }
+
+        paragraph.parseData = {
+            content: inlinersNode,
+            ...(alignment && { alignment }),
+            ...(font && { font }),
+        };
+
         options.step && (await options.step(paragraph, strBlock));
 
         return paragraph;

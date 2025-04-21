@@ -1,7 +1,6 @@
-import type { RootNode } from '@bitran-js/core';
-import type { PreRenderData } from '@bitran-js/transpiler';
+import type { RenderDataStorage, RootNode } from '@bitran-js/core';
 
 export interface BitranContent {
     root: RootNode;
-    preRenderData?: Record<string, PreRenderData>;
+    renderDataStorage: RenderDataStorage;
 }

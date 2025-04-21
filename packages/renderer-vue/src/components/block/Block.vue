@@ -52,7 +52,7 @@ onMounted(() => {
             <BlockAside :node :hovered :error />
             <div class="bitran-blockMain">
                 <div v-if="error">{{ error }}</div>
-                <ElementComponent v-else :node />
+                <ElementComponent v-else :node :class="node.meta.classes" />
             </div>
         </div>
 
@@ -71,11 +71,8 @@ onMounted(() => {
     }
 
     .bitran-block {
-        display: flex;
-
-        .bitran-blockMain {
-            flex: 1;
-        }
+        position: relative;
+        padding-left: var(--_bitran_asideWidth);
     }
 
     //

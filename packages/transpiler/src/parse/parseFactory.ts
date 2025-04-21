@@ -12,9 +12,9 @@ import {
 import type { Parser } from './parser';
 import type { ParseOptions } from './parseOptions';
 import type { ElementTranspiler } from '../transpiler';
-import { splitFirstLine, textToObj } from '../utils/str';
+import { parseYAML, splitFirstLine } from '../utils/str';
 import { tryRange, type Range } from '../utils/range';
-import type { RawObject } from '../utils/RawObject';
+import { isPlainObject } from '../utils/plainObject';
 
 export abstract class ParseFactory<
     T extends GenericElementSchema = GenericElementSchema,
@@ -85,13 +85,15 @@ export abstract class BlockParseFactory<
     ): Promise<T['ParseData']>;
 }
 
+export type ObjBlockParseMode = 'string' | 'object' | 'any';
+
 export abstract class ObjBlockParseFactory<
     T extends GenericElementSchema = GenericElementSchema,
 > extends BlockParseFactory<T> {
     abstract objName: string;
 
     abstract parseDataFromObj(
-        obj: RawObject,
+        obj: any,
         strBlock: string,
     ): Promise<T['ParseData']>;
 
@@ -101,7 +103,27 @@ export abstract class ObjBlockParseFactory<
 
     override async createParseData(strBlock: string): Promise<T['ParseData']> {
         const { restText } = splitFirstLine(strBlock);
-        return this.parseDataFromObj(textToObj(restText), strBlock);
+        const parseMode = this.getParseMode(restText);
+
+        if (parseMode === 'string') {
+            return this.parseDataFromObj(restText, strBlock);
+        }
+
+        const parsedContent = parseYAML(restText);
+
+        if (parseMode === 'object') {
+            if (!isPlainObject(parsedContent)) {
+                throw new Error(
+                    `Block "${this.objName}" content must be a plain object!`,
+                );
+            }
+        }
+
+        return this.parseDataFromObj(parsedContent, strBlock);
+    }
+
+    getParseMode(content: string): ObjBlockParseMode {
+        return 'object';
     }
 }
 

@@ -14,7 +14,7 @@ describe('traceNodeUp', () => {
         const paragraph = new ParagraphNode();
         const paragraphInliners = new InlinersNode(paragraph);
         paragraphInliners.setNodes(textNode);
-        paragraph.parseData = paragraphInliners;
+        paragraph.parseData = { content: paragraphInliners };
 
         const rootNode = new RootNode();
         rootNode.setNodes(paragraph);
@@ -38,7 +38,7 @@ describe('traceNodeUp', () => {
         const paragraph = new ParagraphNode();
         const paragraphInliners = new InlinersNode(paragraph);
         paragraphInliners.setNodes(textNode);
-        paragraph.parseData = paragraphInliners;
+        paragraph.parseData = { content: paragraphInliners };
 
         const trace = await traceNodeUp(textNode);
 
@@ -81,7 +81,7 @@ describe('traceNodeDown', () => {
         const paragraph = new ParagraphNode();
         const paragraphInliners = new InlinersNode(paragraph);
         paragraphInliners.setNodes(textNode);
-        paragraph.parseData = paragraphInliners;
+        paragraph.parseData = { content: paragraphInliners };
 
         const rootNode = new RootNode();
         rootNode.setNodes(paragraph);

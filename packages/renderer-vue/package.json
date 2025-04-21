@@ -1,6 +1,6 @@
 {
     "name": "@bitran-js/renderer-vue",
-    "version": "1.0.0-dev.11",
+    "version": "1.0.0-dev.12",
     "type": "module",
     "description": "Bitran Vue Renderer",
     "keywords": [
@@ -33,8 +33,8 @@
         "prepack": "bun run build"
     },
     "peerDependencies": {
-        "@bitran-js/core": "workspace:1.0.0-dev.11",
-        "@bitran-js/transpiler": "workspace:1.0.0-dev.11",
+        "@bitran-js/core": "workspace:1.0.0-dev.12",
+        "@bitran-js/transpiler": "workspace:1.0.0-dev.12",
         "vue": "^3.5.13",
         "sass": "^1.86.0"
     },

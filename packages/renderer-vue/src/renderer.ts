@@ -3,11 +3,12 @@ import {
     type ClassOf,
     type ElementNode,
     type GenericElementSchema,
+    type RenderDataGenerator,
 } from '@bitran-js/core';
 
 import type { ElementPhrases, CustomPhrases } from './language';
 
-type ElementVueRendererBase<
+export type ElementVueRenderer<
     T extends GenericElementSchema = GenericElementSchema,
     K extends CustomPhrases = {},
 > = {
@@ -24,19 +25,8 @@ type ElementVueRendererBase<
         isServer?: boolean;
         node: ElementNode<T>;
     }) => Promise<boolean> | boolean;
+    renderDataGenerator?: RenderDataGenerator<T>;
 };
-
-export type ElementVueRenderer<
-    T extends GenericElementSchema = GenericElementSchema,
-    K extends CustomPhrases = {},
-> = ElementVueRendererBase<T, K> &
-    (T extends { RenderData: any }
-        ? {
-              createRenderData: (
-                  node: ElementNode<T>,
-              ) => Promise<T['RenderData']>;
-          }
-        : {});
 
 export type ElementVueRenderers = Record<string, ElementVueRenderer>;
 

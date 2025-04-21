@@ -2,10 +2,12 @@ import {
     indent,
     normalizeLineEndings,
     splitFirstLine,
-    textToObj,
+    parseYAML,
     textToStrBlocks,
     tryParseInt,
     dedent,
+    toStrObjectBlock,
+    stringifyYAML,
 } from '../../src/utils/str';
 
 describe('normalizeLineEndings', () => {
@@ -54,17 +56,100 @@ describe('textToStrBlocks', () => {
     }
 });
 
-describe('textToObj', () => {
-    it('should handle empty line', () =>
-        expect(textToObj('')).toMatchObject({}));
-    it('should handle non-object string', () =>
-        expect(textToObj('[5, 3, 2]')).toMatchObject({}));
-    it('should handle literal object', () =>
-        expect(textToObj('a: b\nfoo: 5\nbar: [1, 2, 3]')).toMatchObject({
+describe('parseYAML', () => {
+    it('should handle empty string', () => {
+        expect(parseYAML('')).toBe(null);
+    });
+
+    it('should parse simple objects', () => {
+        expect(parseYAML('a: b\nfoo: 5\nbar: [1, 2, 3]')).toMatchObject({
             a: 'b',
             foo: 5,
             bar: [1, 2, 3],
-        }));
+        });
+    });
+
+    it('should parse arrays', () => {
+        expect(parseYAML('[5, 3, 2]')).toEqual([5, 3, 2]);
+    });
+
+    it('should parse nested structures', () => {
+        const yaml = `
+        name: test
+        nested:
+          level1: value
+          array: [1, 2, 3]
+          obj:
+            key: value
+        `;
+        expect(parseYAML(yaml)).toMatchObject({
+            name: 'test',
+            nested: {
+                level1: 'value',
+                array: [1, 2, 3],
+                obj: {
+                    key: 'value',
+                },
+            },
+        });
+    });
+
+    it('should throw error on invalid YAML', () => {
+        expect(() => parseYAML('a: : b')).toThrow();
+    });
+});
+
+describe('toStrObjectBlock', () => {
+    it('should create block with text', () => {
+        const text = 'Hello world!';
+        const expected = '@text\n    Hello world!';
+        expect(toStrObjectBlock('text', text)).toBe(expected);
+    });
+
+    it('should create block with simple object', () => {
+        const obj = { name: 'test', value: 123 };
+        const stringified = stringifyYAML(obj);
+        const expected = `@myObject\n${indent(stringified)}`;
+        expect(toStrObjectBlock('myObject', obj)).toBe(expected);
+    });
+
+    it('should create block with array', () => {
+        const arr = [1, 2, 3];
+        const stringified = stringifyYAML(arr);
+        const expected = `@myArray\n${indent(stringified)}`;
+        expect(toStrObjectBlock('myArray', arr)).toBe(expected);
+    });
+
+    it('should create block with nested structures', () => {
+        const obj = {
+            name: 'test',
+            nested: {
+                values: [1, 2, 3],
+                option: true,
+            },
+        };
+        const result = toStrObjectBlock('complex', obj);
+        expect(result).toContain('@complex');
+        expect(result).toContain('name: test');
+        expect(result).toContain('nested:');
+        expect(result).toContain('values:');
+        expect(result).toContain('- 1');
+        expect(result).toContain('option: true');
+    });
+
+    it('should handle multiline text properly', () => {
+        const obj = {
+            text: 'line 1\nline 2\nline 3',
+        };
+        const result = toStrObjectBlock('multiline', obj);
+        expect(result).toContain('text: |');
+        expect(result).toContain('        line 1');
+        expect(result).toContain('        line 2');
+        expect(result).toContain('        line 3');
+        expect(result).not.toContain('text: |+');
+        expect(result).not.toContain('text: |-');
+        expect(result).not.toContain('text: |>');
+    });
 });
 
 describe('splitFirstLine', () => {

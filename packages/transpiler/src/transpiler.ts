@@ -3,6 +3,7 @@ import {
     type ElementNode,
     type GenericElementSchema,
     type ProvideElementSchema,
+    type RenderDataGenerator,
 } from '@bitran-js/core';
 
 import type { ElementParseFactoryClass } from './parse/parseFactory';
@@ -16,10 +17,7 @@ export type ElementTranspiler<
     Node: ClassOf<ElementNode<T>>;
     Parsers: ElementParseFactoryClass<T>[];
     Stringifier: ElementStringifyFactoryClass;
-    createPreRenderData?: (
-        node: ElementNode<T>,
-        extra?: any,
-    ) => Promise<T['RenderData']>;
+    renderDataGenerator?: RenderDataGenerator<T>;
 } & (T extends { Provide: any }
     ? { provide: T['Provide'] }
     : { provide?: never });

@@ -1,5 +1,9 @@
 import type { Component } from 'vue';
-import { BlockErrorNode, InlinerErrorNode } from '@bitran-js/core';
+import {
+    BlockErrorNode,
+    createRenderData,
+    InlinerErrorNode,
+} from '@bitran-js/core';
 
 import { useElementRenderer } from './renderer';
 import { ensureElementComponent } from './ensureComponent';
@@ -36,20 +40,22 @@ export async function setupAppElement(): Promise<ElementSetupResult> {
 export async function getOrCreateRenderData() {
     const node = useElementNode();
     const content = injectContent();
+    const renderer = useElementRenderer();
+    const generator = renderer.renderDataGenerator;
 
-    const preRenderData = content.preRenderData?.[node.autoId];
-    if (preRenderData) {
-        if (preRenderData.type === 'error')
-            throw new Error(preRenderData.message);
+    const renderData = await createRenderData({
+        node,
+        storage: content.renderDataStorage,
+        generator,
+    });
 
-        return preRenderData.data;
+    if (!renderData) {
+        return undefined;
     }
 
-    const renderer = useElementRenderer();
-    const createRenderData = renderer.createRenderData;
+    if (renderData.type === 'error') {
+        throw new Error(renderData.message);
+    }
 
-    return (
-        // @ts-ignore
-        createRenderData ? createRenderData(node) : undefined
-    );
+    return renderData.data;
 }
