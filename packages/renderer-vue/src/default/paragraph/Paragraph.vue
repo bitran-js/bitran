@@ -6,12 +6,32 @@ import Render from '../../components/Render.vue';
 import { useElementParseData } from '../../front/element/parseData';
 
 defineProps<ElementProps<ParagraphSchema>>();
-const inliners = useElementParseData<ParagraphSchema>();
+const parseData = useElementParseData<ParagraphSchema>();
+
+const paragraphStyle = (() => {
+    const style: Record<string, string> = {};
+
+    if (parseData.alignment) {
+        style['text-align'] = parseData.alignment;
+    }
+
+    if (parseData.font) {
+        style['font-family'] =
+            parseData.font === 'main'
+                ? 'var(--bitran_fontMain)'
+                : 'var(--bitran_fontAlt)';
+    }
+
+    return Object.keys(style).length === 0 ? undefined : style;
+})();
 </script>
 
 <template>
-    <p class="bitran-paragraph">
-        <Render :node="inliners" />
+    <p
+        class="bitran-paragraph"
+        v-bind="paragraphStyle ? { style: paragraphStyle } : {}"
+    >
+        <Render :node="parseData.content" />
     </p>
 </template>
 

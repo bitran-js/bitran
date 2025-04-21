@@ -8,15 +8,40 @@ import { BlockNode, InlinerNode } from './dom/element';
 
 export const paragraphName = 'paragraph';
 
+export const paragraphAligments = [
+    'left',
+    'center',
+    'right',
+    'justify',
+] as const;
+
+export const paragraphFonts = ['main', 'alt'] as const;
+
+export type ParagraphAlignment = (typeof paragraphAligments)[number];
+export type ParagraphFont = (typeof paragraphFonts)[number];
+
+export interface ParagraphParseData {
+    content: InlinersNode;
+    alignment?: ParagraphAlignment;
+    font?: ParagraphFont;
+}
+
+type ParagraphMeta = {
+    [K in ParagraphAlignment as `text-${K}`]?: null;
+} & {
+    [K in ParagraphFont as `font-${K}`]?: null;
+};
+
 export type ParagraphSchema = DefineElementSchema<{
-    ParseData: InlinersNode;
+    ParseData: ParagraphParseData;
+    Meta: ParagraphMeta;
 }>;
 
 export class ParagraphNode extends BlockNode<ParagraphSchema> {
     override name = paragraphName;
 
     override get children() {
-        return this.parseData ? [this.parseData] : undefined;
+        return this?.parseData?.content ? [this.parseData.content] : undefined;
     }
 }
 
