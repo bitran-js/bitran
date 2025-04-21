@@ -17,7 +17,7 @@ function createParagraph(text: string, meta?: ElementMeta) {
     const paragraph = new ParagraphNode();
     const paragraphInliners = new InlinersNode(paragraph);
     paragraphInliners.setNodes(textNode);
-    paragraph.parseData = paragraphInliners;
+    paragraph.parseData = { content: paragraphInliners };
 
     if (meta) paragraph.meta = meta;
 

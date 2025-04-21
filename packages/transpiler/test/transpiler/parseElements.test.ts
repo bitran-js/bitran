@@ -64,7 +64,7 @@ This is a paragraph with **bold text**{ #bold .foo } and a -- dash --.
     it('should parse first paragraph correctly', () => {
         const paragraph = root.children![1] as ParagraphNode;
         expect(paragraph).toBeInstanceOf(ParagraphNode);
-        const inliners = paragraph.parseData.children!;
+        const inliners = paragraph.parseData.content.children!;
 
         expect(
             inliners.map((inliner) => (inliner as ElementNode).name),
@@ -111,7 +111,7 @@ This is a paragraph with **bold text**{ #bold .foo } and a -- dash --.
     });
 
     it('should parse inline bold meta', () => {
-        const bold = (root.children![1] as ParagraphNode).parseData
+        const bold = (root.children![1] as ParagraphNode).parseData.content
             .children![1] as BoldNode;
 
         expect(bold.meta).toEqual({ id: 'bold', classes: ['foo'] });

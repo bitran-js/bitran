@@ -32,7 +32,7 @@ describe('Parser. No transpilers', () => {
 
         it('should return single paragraph with single text node', async () => {
             const [paragraph] = await parser.parseBlocks('Hello world');
-            const inliners = (paragraph as ParagraphNode).parseData;
+            const inliners = (paragraph as ParagraphNode).parseData.content;
             expect(inliners?.children).toHaveLength(1);
             const textNode = inliners?.children?.[0] as TextNode;
             expect(textNode).toBeInstanceOf(TextNode);

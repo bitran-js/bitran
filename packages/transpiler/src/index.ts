@@ -13,4 +13,3 @@ export * from './stringify/stringifyOptions';
 export * from './stringify/stringifier';
 
 export * from './transpiler';
-export * from './preRenderData';

@@ -9,3 +9,4 @@ export * from './utils/ClassOf';
 
 export * from './schema';
 export * from './default';
+export * from './renderData';
