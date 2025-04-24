@@ -1,7 +1,6 @@
-import YAML from 'yaml';
 import type { ElementMeta } from '@bitran-js/core';
 
-import { indent, parseYAML, tryParseInt } from './utils/str';
+import { indent, parseYAML, stringifyYAML, tryParseInt } from './utils/str';
 import { isPlainObject } from './utils/plainObject';
 
 //
@@ -103,18 +102,18 @@ export function parseLineMeta(lineMeta: string): ElementMeta {
 export function stringifyMeta(meta: ElementMeta, complexMetaAllowed: boolean) {
     if (!meta) return '';
 
-    let hasObjectProps = false;
+    let mustBeComplexMeta = false;
     for (const [key, value] of Object.entries(meta)) {
         if (key === 'id') continue;
         if (key === 'classes') continue;
 
-        if (typeof value === 'object') {
-            hasObjectProps = true;
+        if (typeof value === 'object' && value !== null) {
+            mustBeComplexMeta = true;
             break;
         }
     }
 
-    if (complexMetaAllowed && hasObjectProps) {
+    if (complexMetaAllowed && mustBeComplexMeta) {
         // Complex meta output
 
         let output = indent(YAML.stringify(meta, null, 4));
@@ -142,15 +141,16 @@ export function stringifyMeta(meta: ElementMeta, complexMetaAllowed: boolean) {
                 continue;
             }
 
-            if (!value) {
+            if (value === null) {
                 output += `${key} `;
                 continue;
             }
 
             if (typeof value === 'string') {
-                output += value.includes(' ')
-                    ? `${key}="${value}" `
-                    : `${key}=${value} `;
+                output +=
+                    value.includes(' ') || /[^\w\d\-]/.test(value)
+                        ? `${key}="${value}" `
+                        : `${key}=${value} `;
                 continue;
             }
 
