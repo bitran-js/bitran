@@ -116,8 +116,8 @@ export function stringifyMeta(meta: ElementMeta, complexMetaAllowed: boolean) {
     if (complexMetaAllowed && mustBeComplexMeta) {
         // Complex meta output
 
-        let output = indent(YAML.stringify(meta, null, 4));
-        output = '{\n' + output + '}';
+        let output = indent(stringifyYAML(meta));
+        output = '{\n' + output + '\n}';
 
         return output;
     } else {

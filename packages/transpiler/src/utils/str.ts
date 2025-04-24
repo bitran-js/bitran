@@ -24,7 +24,8 @@ export function parseYAML(text: string): any {
 
 export function stringifyYAML(content: any): string {
     let text = YAML.stringify(content, { indent: 4 });
-    text = text.replace(/: \|(-|\+|>)\n/gm, ': |\n'); // Hacky way to bypass all YAML weird "newlines" logic and just use "|" for multiline text
+    // Convert all ways YAML stringify can output multiline strings to just "...: |\n" notation
+    text = text.replace(/^(\s*.+): [>|][+-]?\n/gm, '$1: |\n');
     text = text.trim();
     return text;
 }
