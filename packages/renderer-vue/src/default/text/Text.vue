@@ -11,8 +11,12 @@ const text = useElementParseData<TextSchema>();
 const pretty = injectFormatText();
 
 const SubNodes: VNode[] = [];
+
 for (const textFragment of text.split(/\\$/gm)) {
-    if (!textFragment) continue;
+    if (!textFragment) {
+        SubNodes.push(h('br'));
+        continue;
+    }
 
     SubNodes.push(h(Text, pretty(textFragment)));
     SubNodes.push(h('br'));
