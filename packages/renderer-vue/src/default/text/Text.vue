@@ -3,12 +3,10 @@ import { Text, Fragment, h, type VNode } from 'vue';
 import type { TextSchema } from '@bitran-js/core';
 
 import type { ElementProps } from '../../front/element/props';
-import { injectFormatText } from '../../front/bitranProps';
 import { useElementParseData } from '../../front/element/parseData';
 
 defineProps<ElementProps<TextSchema>>();
 const text = useElementParseData<TextSchema>();
-const pretty = injectFormatText();
 
 const SubNodes: VNode[] = [];
 
@@ -18,7 +16,7 @@ for (const textFragment of text.split(/\\$/gm)) {
         continue;
     }
 
-    SubNodes.push(h(Text, pretty(textFragment)));
+    SubNodes.push(h(Text, textFragment));
     SubNodes.push(h('br'));
 }
 

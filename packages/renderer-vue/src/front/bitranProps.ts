@@ -12,7 +12,7 @@ export interface BitranProps {
     language?: string;
     prefixId?: string;
     editMode?: boolean;
-    formatText?: (text: string) => string;
+    formatText?: (text: string, state?: any) => string;
     RenderWrapper?: Component<{ mode: 'hybrid' | 'client' }>;
     isDev?: boolean;
     isServer?: boolean;
