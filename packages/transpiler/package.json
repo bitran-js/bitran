@@ -1,6 +1,6 @@
 {
     "name": "@bitran-js/transpiler",
-    "version": "1.0.0-dev.12",
+    "version": "1.0.0-dev.13",
     "type": "module",
     "description": "Bitran toolkit for parsing text in DOM and stringifying it back",
     "keywords": [
@@ -34,7 +34,7 @@
         "unbuild": "^3.5.0"
     },
     "peerDependencies": {
-        "@bitran-js/core": "workspace:1.0.0-dev.12",
+        "@bitran-js/core": "workspace:1.0.0-dev.13",
         "yaml": "^2.7.0"
     }
 }

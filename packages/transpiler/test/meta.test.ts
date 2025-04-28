@@ -113,6 +113,54 @@ describe('stringifyMeta', () => {
         const result = stringifyMeta(meta, false);
         expect(result).toBe('{ #testId .classOne +flag title="My Title" }');
     });
+
+    it('should handle null values by outputting only the property name', () => {
+        const meta: ElementMeta = {
+            id: 'testId',
+            nullProp: null,
+        };
+        const result = stringifyMeta(meta, false);
+        expect(result).toBe('{ #testId nullProp }');
+    });
+
+    it('should quote strings containing special characters', () => {
+        const meta: ElementMeta = {
+            normalString: 'hello',
+            specialString: 'hello@world!',
+            spacedString: 'hello world',
+        };
+        const result = stringifyMeta(meta, false);
+        expect(result).toBe(
+            '{ normalString=hello specialString="hello@world!" spacedString="hello world" }',
+        );
+    });
+
+    it('should handle a mix of value types correctly', () => {
+        const meta: ElementMeta = {
+            id: 'mixed',
+            classes: ['item'],
+            nullProp: null,
+            boolTrue: true,
+            boolFalse: false,
+            num: 42,
+            simpleStr: 'hello',
+            specialStr: 'hello:world',
+        };
+        const result = stringifyMeta(meta, false);
+        expect(result).toBe(
+            '{ #mixed .item nullProp +boolTrue -boolFalse num=42 simpleStr=hello specialStr="hello:world" }',
+        );
+    });
+
+    it('should not use complex format when no object values are present', () => {
+        const meta: ElementMeta = {
+            id: 'simple',
+            nullProp: null,
+            num: 42,
+        };
+        const result = stringifyMeta(meta, true); // Even with complexMetaAllowed=true
+        expect(result).toBe('{ #simple nullProp num=42 }');
+    });
 });
 
 describe('detachMeta', () => {
